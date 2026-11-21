@@ -1,5 +1,7 @@
 # soundLInk download page
 
+Live production URL: https://soundlink-download.vercel.app/
+
 Static public page deployed to Vercel, with public read-only release metadata from the existing Supabase project. APK bytes are served by the public GitHub release, so no account is needed to download.
 
 - Vercel team: MacroView (`team_Evei6XHnBnCMJfvfNSXk0Agn`)

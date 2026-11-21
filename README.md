@@ -1,5 +1,7 @@
 # soundLInk Android APK
 
+[Download soundLInk for Android](https://soundlink-download.vercel.app/) — public download page; no account needed.
+
 Download the installable APK from [Releases](https://github.com/williamkbukowski94/soundlinkandroidapk/releases).
 
 Install the same APK on each Android 10+ phone. Android may ask you to allow installation from your browser or file manager.
