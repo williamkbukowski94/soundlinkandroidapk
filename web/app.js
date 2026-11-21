@@ -17,7 +17,7 @@ async function loadRelease(){
   document.querySelector('#checksum').textContent=release.sha256;
   status.textContent=`Version ${release.version} · ${(release.size_bytes/1024).toFixed(0)} KB · Android ${release.min_android}+`;
  }catch{
-  status.textContent='Version 0.1.0 · GitHub download available; live release details unavailable.';
+  status.textContent='Version 0.2.0 · GitHub download available; live release details unavailable.';
  }
 }
 loadRelease();
