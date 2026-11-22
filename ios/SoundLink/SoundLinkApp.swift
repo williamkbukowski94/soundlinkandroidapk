@@ -130,7 +130,7 @@ extension Data {
         guard host.range(of: #"^\d{1,3}(\.\d{1,3}){3}$"#, options: .regularExpression) != nil, code.count == 8, code.allSatisfy({ $0.isASCII && $0.isNumber }) else { status = "Enter the host's IPv4 address and 8-digit code."; return }
         self.bluetooth = bluetooth; self.correction = correction
         let id = sessionID; connected = true; status = "Measuring the host clock…"
-        timeout = Task { try? await Task.sleep(nanoseconds: 12_000_000_000); if !Task.isCancelled && id == sessionID && stream == nil { stop(); status = "Connection timed out. Check Wi-Fi and the host address." } }
+        timeout = Task { try? await Task.sleep(nanoseconds: 12_000_000_000); if !Task.isCancelled && id == sessionID && connected { stop(); status = "Connection timed out. Check Wi-Fi and the host address." } }
         task = Task {
             do {
                 try prepareAudio()
