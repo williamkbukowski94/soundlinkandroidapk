@@ -117,7 +117,7 @@ extension Data {
     private var audioEpoch = UUID()
     private let format = AVAudioFormat(standardFormatWithSampleRate: 48000, channels: 2)!
     private var now: Double { Double(DispatchTime.now().uptimeNanoseconds) }
-    func resetAudio() { audioEpoch = UUID(); player.stop(); player.play(); generation = nil; nextFrame = nil; pending = 0 }
+    func resetAudio() { audioEpoch = UUID(); player.stop(); if engine.isRunning { player.play() }; generation = nil; nextFrame = nil; pending = 0 }
     func stop() {
         sessionID = UUID(); task?.cancel(); clockTask?.cancel(); timeout?.cancel()
         stream?.connection.cancel(); clockStream?.connection.cancel(); stream = nil; clockStream = nil
