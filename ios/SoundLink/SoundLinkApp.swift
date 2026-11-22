@@ -114,9 +114,10 @@ extension Data {
     private var firstLocalTime = 0.0
     private var pending = 0
     private var sessionID = UUID()
+    private var audioEpoch = UUID()
     private let format = AVAudioFormat(standardFormatWithSampleRate: 48000, channels: 2)!
     private var now: Double { Double(DispatchTime.now().uptimeNanoseconds) }
-    func resetAudio() { player.stop(); player.play(); generation = nil; nextFrame = nil; pending = 0 }
+    func resetAudio() { audioEpoch = UUID(); player.stop(); player.play(); generation = nil; nextFrame = nil; pending = 0 }
     func stop() {
         sessionID = UUID(); task?.cancel(); clockTask?.cancel(); timeout?.cancel()
         stream?.connection.cancel(); clockStream?.connection.cancel(); stream = nil; clockStream = nil
@@ -211,9 +212,9 @@ extension Data {
         let predicted = firstLocalTime + Double(frame - firstFrame) / 48000 * 1e9
         speed.rate = Float(1 + max(-0.002, min(0.002, (predicted - desired) / 5e9)))
         pending += 1
-        let id = sessionID
+        let id = sessionID, epoch = audioEpoch
         player.scheduleBuffer(buffer, at: contiguous ? nil : AVAudioTime(hostTime: AVAudioTime.hostTime(forSeconds: renderTime / 1e9)), options: [], completionCallbackType: .dataPlayedBack) { [weak self] _ in
-            Task { @MainActor in guard let self, self.sessionID == id else { return }; self.pending = max(0, self.pending - 1) }
+            Task { @MainActor in guard let self, self.sessionID == id, self.audioEpoch == epoch else { return }; self.pending = max(0, self.pending - 1) }
         }
         nextFrame = frame + UInt64(frames)
         status = "Shared timeline active · calibrate against your Android speaker."

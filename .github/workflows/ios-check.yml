@@ -12,3 +12,5 @@ jobs:
       - run: cd ios && xcodegen generate
       - name: Build iPhone simulator app
         run: xcodebuild -project ios/SoundLink.xcodeproj -scheme SoundLink -sdk iphonesimulator -configuration Debug CODE_SIGNING_ALLOWED=NO build
+      - name: Build unsigned iPhone device app
+        run: xcodebuild -project ios/SoundLink.xcodeproj -scheme SoundLink -sdk iphoneos -configuration Debug CODE_SIGNING_ALLOWED=NO build
